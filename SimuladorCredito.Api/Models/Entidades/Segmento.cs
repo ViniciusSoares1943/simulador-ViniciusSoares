@@ -10,9 +10,10 @@ namespace SimuladorCredito.Api.Models.Entidades
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public TipoPessoa TipoPessoa { get; set; }
+        public decimal RendaMinima { get; set; }
+        public decimal? RendaMaxima { get; set; }
         public DateTime DataCadastro { get; set; }
         public bool Ativo { get; set; }
         public DateTime DataAlteracao { get; set; }
-
     }
 }
