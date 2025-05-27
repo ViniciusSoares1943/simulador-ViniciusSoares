@@ -1,19 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimuladorCredito.Api.Data;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using SimuladorCredito.Api.Repositorios.Interfaces;
 
 namespace SimuladorCredito.Api.Repositorios
 {
-    public interface IRepositorioBase<T> where T : class
-    {
-        Task<T?> ObterPorIdAsync(int id);
-        Task<IEnumerable<T>> ObterTodosAsync();
-        Task AdicionarAsync(T entidade);
-        Task AtualizarAsync(T entidade);
-        Task RemoverAsync(int id);
-    }
-
     public class RepositorioBase<T> : IRepositorioBase<T> where T : class
     {
         protected readonly DbContextClass _context;
@@ -25,31 +15,31 @@ namespace SimuladorCredito.Api.Repositorios
             _dbSet = _context.Set<T>();
         }
 
-        public virtual async Task<T?> ObterPorIdAsync(int id)
+        public async Task<T?> ObterPorId(int id)
         {
             return await _dbSet.FindAsync(id);
         }
 
-        public virtual async Task<IEnumerable<T>> ObterTodosAsync()
+        public async Task<List<T>> ObterTodos()
         {
             return await _dbSet.ToListAsync();
         }
 
-        public virtual async Task AdicionarAsync(T entidade)
+        public async Task Adicionar(T entidade)
         {
             await _dbSet.AddAsync(entidade);
             await _context.SaveChangesAsync();
         }
 
-        public virtual async Task AtualizarAsync(T entidade)
+        public async Task Atualizar(T entidade)
         {
             _dbSet.Update(entidade);
             await _context.SaveChangesAsync();
         }
 
-        public virtual async Task RemoverAsync(int id)
+        public async Task Remover(int id)
         {
-            var entidade = await ObterPorIdAsync(id);
+            var entidade = await ObterPorId(id);
             if (entidade != null)
             {
                 _dbSet.Remove(entidade);
