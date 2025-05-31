@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SimuladorCredito.Api.Models.DTOs;
 using SimuladorCredito.Api.Models.Entidades;
 using SimuladorCredito.Api.Models.Enums;
 using SimuladorCredito.Api.Servicos.Interfaces;
@@ -33,7 +34,7 @@ namespace SimuladorCredito.Api.Controllers
         }
 
         [HttpGet("ObterPorTipoPessoa")]
-        public async Task<ActionResult<List<Produto>>> ObterPorTipoPessoa(TipoPessoa tipoPessoa)
+        public async Task<ActionResult<List<ProdutoSaida>>> ObterPorTipoPessoa(TipoPessoa tipoPessoa)
         {
             try
             {

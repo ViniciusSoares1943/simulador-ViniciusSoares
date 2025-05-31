@@ -1,4 +1,5 @@
-﻿using SimuladorCredito.Api.Models.Entidades;
+﻿using SimuladorCredito.Api.Models.DTOs;
+using SimuladorCredito.Api.Models.Entidades;
 using SimuladorCredito.Api.Models.Enums;
 
 namespace SimuladorCredito.Api.Servicos.Interfaces
@@ -10,6 +11,6 @@ namespace SimuladorCredito.Api.Servicos.Interfaces
         public Task Adicionar(Produto produto);
         public Task Atualizar(Produto produto);
         public Task Remover(int id);
-        public Task<List<Produto>> ObterPorTipoPessoa(TipoPessoa tipoPessoa);
+        public Task<List<ProdutoSaida>> ObterPorTipoPessoa(TipoPessoa tipoPessoa);
     }
 }

@@ -1,4 +1,5 @@
-﻿using SimuladorCredito.Api.Models.Entidades;
+﻿using SimuladorCredito.Api.Models.DTOs;
+using SimuladorCredito.Api.Models.Entidades;
 using SimuladorCredito.Api.Models.Enums;
 using SimuladorCredito.Api.Repositorios.Interfaces;
 using SimuladorCredito.Api.Servicos.Interfaces;
@@ -27,9 +28,18 @@ namespace SimuladorCredito.Api.Servicos
             return await _produtoRepositorio.ObterTodos();
         }
 
-        public async Task<List<Produto>> ObterPorTipoPessoa(TipoPessoa tipoPessoa)
+        public async Task<List<ProdutoSaida>> ObterPorTipoPessoa(TipoPessoa tipoPessoa)
         {
-            return await _produtoRepositorio.ObterPorTipoPessoa(tipoPessoa);
+            var produtos = await _produtoRepositorio.ObterPorTipoPessoa(tipoPessoa);
+
+            return produtos.Select(x => new ProdutoSaida
+            {
+                Nome = x.Nome,
+                Descricao = x.Descricao,
+                TipoPessoa = x.TipoPessoa,
+                DataCadastro = x.DataCadastro,
+                ProdutoId = x.Id
+            }).ToList();
         }
 
         public async Task Adicionar(Produto produto)

@@ -14,7 +14,11 @@ namespace SimuladorCredito.Api.Repositorios
 
         public async Task<List<Produto>> ObterPorTipoPessoa(TipoPessoa tipoPessoa)
         {
-            var produtos = await _context.Produtos.Where(x => x.TipoPessoa == tipoPessoa).ToListAsync();
+            var produtos = await _context.Produtos
+                .Where(x => 
+                    x.TipoPessoa == tipoPessoa
+                    && x.Ativo)
+                .ToListAsync();
             return produtos;
         }
     }
