@@ -66,9 +66,13 @@ namespace SimuladorCredito.Api.Servicos
             if (existente == null)
                 throw new Exception($"Produto com Id {produto.Id} não encontrado.");
 
-            produto.DataAlteracao = DateTime.Now;
+            existente.DataAlteracao = DateTime.Now;
+            existente.Nome = produto.Nome;
+            existente.Descricao = produto.Descricao;
+            existente.TipoPessoa = produto.TipoPessoa;
+            existente.Ativo = produto.Ativo;
 
-            await _produtoRepositorio.Atualizar(produto);
+            await _produtoRepositorio.Atualizar(existente);
         }
 
         public async Task Remover(int id)

@@ -12,6 +12,10 @@ namespace SimuladorCredito.Api.Repositorios
         {
         }
 
+        public async Task<List<TaxaCredito>> ObterTodosInclude()
+        {
+            return await _context.TaxasCredito.Include(x => x.Segmento).Include(x => x.Produto).ToListAsync();
+        }
         public async Task<TaxaCredito?> ObterTaxaSimulacao(SimularCreditoEntrada simularCreditoEntrada)
         {
             return await _context.TaxasCredito

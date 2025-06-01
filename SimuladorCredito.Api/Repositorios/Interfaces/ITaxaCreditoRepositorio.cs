@@ -10,6 +10,7 @@ namespace SimuladorCredito.Api.Repositorios.Interfaces
         Task Adicionar(TaxaCredito taxaCredito);
         Task Atualizar(TaxaCredito taxaCredito);
         Task Remover(int id);
+        Task<List<TaxaCredito>> ObterTodosInclude();
         Task<TaxaCredito?> ObterTaxaSimulacao(SimularCreditoEntrada simularCreditoEntrada);
     }
 }

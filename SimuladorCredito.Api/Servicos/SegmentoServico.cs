@@ -50,9 +50,15 @@ namespace SimuladorCredito.Api.Servicos
             if (existente == null)
                 throw new Exception($"Segmento com Id {segmento.Id} não encontrado.");
 
-            segmento.DataAlteracao = DateTime.Now;
+            existente.DataAlteracao = DateTime.Now;
+            existente.Nome = segmento.Nome;
+            existente.Descricao = segmento.Descricao;
+            existente.TipoPessoa = segmento.TipoPessoa;
+            existente.RendaMinima = segmento.RendaMinima;
+            existente.RendaMaxima = segmento.RendaMaxima;
+            existente.Ativo = segmento.Ativo;
 
-            await _segmentoRepositorio.Atualizar(segmento);
+            await _segmentoRepositorio.Atualizar(existente);
         }
 
         public async Task Remover(int id)
