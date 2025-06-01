@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using NLog.Web;
 using SimuladorCredito.Api.Data;
 using SimuladorCredito.Api.Repositorios;
 using SimuladorCredito.Api.Repositorios.Interfaces;
 using SimuladorCredito.Api.Servicos;
 using SimuladorCredito.Api.Servicos.Interfaces;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,10 +21,18 @@ builder.Services.AddScoped<ITaxaCreditoServico, TaxaCreditoServico>();
 builder.Services.AddDbContext<DbContextClass>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SicoobDb")));
 
+builder.Logging.ClearProviders();
+builder.Logging.SetMinimumLevel(LogLevel.Trace);
+builder.Host.UseNLog();
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
 
 builder.Services.AddCors(options =>
 {
