@@ -7,6 +7,7 @@ import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { NgxMaskDirective } from 'ngx-mask';
+import { CreditRateService } from '../../services/credit-rate.service';
 
 @Component({
   selector: 'app-credit-simulator',
@@ -31,7 +32,8 @@ export class CreditSimulatorComponent implements OnInit {
 
   constructor (
     private formBuilder: FormBuilder,
-    private productService: ProductService
+    private productService: ProductService,
+    private creditRateService: CreditRateService
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +46,7 @@ export class CreditSimulatorComponent implements OnInit {
       personType: [null, Validators.required],
       modality: [null, Validators.required],
       productId: [null, Validators.required],
-      salary: [null, Validators.required, Validators.min(0)]
+      salary: [null, Validators.required]
     });
   }
 
@@ -66,8 +68,17 @@ export class CreditSimulatorComponent implements OnInit {
   }
 
   public onSubmit(): void{
+    console.log(this.form.value);
     if (this.form.invalid) return;
+    this.creditResult = undefined;
 
+    if (this.form.value.salary < 0) {
+      this.form.get('salary')?.setErrors({ min: true });
+      return;
+    }
+
+    this.creditRateService.simulateCreditRate(this.form.value).subscribe(res => {
+      this.creditResult = res;
+    });
   }
-
 }
