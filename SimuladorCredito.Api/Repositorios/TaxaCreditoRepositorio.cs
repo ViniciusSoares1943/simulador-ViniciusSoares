@@ -17,12 +17,18 @@ namespace SimuladorCredito.Api.Repositorios
             return await _context.TaxasCredito
                 .Include(x => x.Segmento)
                 .Where(x => 
-                    x.TipoPessoa == simularCreditoEntrada.TipoPessoa
-                    && x.ProdutoId == simularCreditoEntrada.ProdutoId
-                    && x.Modalidade == simularCreditoEntrada.Modalidade
-                    && x.Segmento.TipoPessoa == simularCreditoEntrada.TipoPessoa
-                    && x.Segmento.RendaMinima <= simularCreditoEntrada.Renda
-                    && x.Segmento.RendaMaxima.HasValue && x.Segmento.RendaMaxima >= simularCreditoEntrada.Renda)
+                    x.Ativo && 
+                    x.TipoPessoa == simularCreditoEntrada.TipoPessoa && 
+                    x.ProdutoId == simularCreditoEntrada.ProdutoId && 
+                    x.Modalidade == simularCreditoEntrada.Modalidade && 
+                    x.Segmento.Ativo && 
+                    x.Segmento.TipoPessoa == simularCreditoEntrada.TipoPessoa && 
+                    x.Segmento.RendaMinima <= simularCreditoEntrada.Renda && 
+                    (
+                        x.Segmento.RendaMaxima.HasValue && 
+                        x.Segmento.RendaMaxima >= simularCreditoEntrada.Renda || 
+                        !x.Segmento.RendaMaxima.HasValue
+                    ))
                 .FirstOrDefaultAsync();
         }
 
