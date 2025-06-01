@@ -1,1 +1,66 @@
-<p>credit-simulator works!</p>
+<main class="simulator-container">
+    <div class="form-section">
+        <h2>Simular crédito</h2>
+        <form [formGroup]="form">
+            <div class="form-group">
+                <label for="personType">Tipo de Pessoa:</label>
+                <select id="personType" formControlName="personType" class="form-control">
+                    <option value="">Selecione</option>
+                    <option *ngFor="let option of personTypeOptions" [value]="option.value">
+                        {{ option.label }}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="modality">Modalidade:</label>
+                <select id="modality" formControlName="modality" class="form-control">
+                    <option value="">Selecione</option>
+                    <option *ngFor="let option of modalityOptions" [value]="option.value">
+                        {{ option.label }}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="productId">Produto:</label>
+                <select id="productId" formControlName="productId" class="form-control">
+                    <option value="">Selecione</option>
+                    <option *ngFor="let produto of productOptions" [value]="produto.productId">
+                        {{ produto.name }}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="salary">Renda:</label>
+                <input 
+                id="salary"
+                type="text"
+                formControlName="salary"
+                mask="separator.2"
+                thousandSeparator="."
+                decimalMarker=","
+                prefix="R$ "
+                class="form-control"
+                />
+            </div>
+
+            <button type="submit" class="submit-button" (click)="onSubmit()">Simular</button>
+        </form>
+    </div>
+
+    <div class="summary-section">
+        <h2>Resultado</h2>
+        <div class="summary-content" *ngIf="creditResult">
+            <div class="summary-row">
+                <span>Segmento:</span>
+                <span>{{ creditResult.segmentName }}</span>
+            </div>
+            <div class="summary-row">
+                <span>Taxa:</span>
+                <span>{{ creditResult.creditRate }}%</span>
+            </div>
+        </div>
+    </div>
+</main>

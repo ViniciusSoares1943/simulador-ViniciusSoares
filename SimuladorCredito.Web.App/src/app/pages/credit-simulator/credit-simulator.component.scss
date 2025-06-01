@@ -1,0 +1,151 @@
+app-simular-credito {
+    .form-title {
+    text-align: center;
+    margin-bottom: 100px;
+    }
+}
+
+.simulator-container {
+    display: flex;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.form-section {
+    flex: 2;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.summary-section {
+    flex: 1;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    height: fit-content;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #4a5568;
+        font-weight: 500;
+    }
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: white;
+
+    &:focus {
+        outline: none;
+        border-color: #4299e1;
+        box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+    }
+
+    &::placeholder {
+        color: #a0aec0;
+    }
+}
+
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%234a5568' viewBox='0 0 16 16'%3E%3Cpath d='M8 10.5l4-4H4l4 4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 1rem;
+
+    &:hover {
+        background-color: #1d4ed8;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+    }
+}
+
+.summary-content {
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 0;
+        border-bottom: 1px solid #e2e8f0;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        span:first-child {
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        span:last-child {
+            color: #2d3748;
+            font-weight: 600;
+        }
+    }
+
+    .free-shipping {
+        color: #28a745;
+    }
+
+    .total {
+        font-weight: bold;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 2px solid #ddd;
+    }
+}
+
+.purchase-button {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+}
