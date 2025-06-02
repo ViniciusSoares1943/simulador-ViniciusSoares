@@ -39,8 +39,9 @@ Este projeto é composto por uma aplicação **frontend Angular 17**, uma **API 
    ```bash
    docker compose up -d
    ```
-
-3. **Acesse os serviços:**
+   Obs: Ao executar pela primeira vez pode demorar um pouco a depender da conexão de rede para baixar as imagens
+   
+4. **Acesse os serviços:**
 
    - Frontend: [http://localhost:8080](http://localhost:8080)
    - Backend (API): [http://localhost:8001/swagger/index.html](http://localhost:8001/swagger/index.html)
