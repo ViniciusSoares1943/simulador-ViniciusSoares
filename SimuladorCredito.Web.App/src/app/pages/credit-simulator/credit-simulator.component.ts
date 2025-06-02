@@ -8,6 +8,9 @@ import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { NgxMaskDirective } from 'ngx-mask';
 import { CreditRateService } from '../../services/credit-rate.service';
+import { finalize, catchError } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-credit-simulator',
@@ -21,19 +24,22 @@ export class CreditSimulatorComponent implements OnInit {
   public form!: FormGroup;
   public creditResult?: CreditSimulatorReturn;
   public personTypeOptions = [
-    { label: 'Pessoa Física', value: PersonType.PF },
-    { label: 'Pessoa Jurídica', value: PersonType.PJ }
+    { label: 'Pessoa Física', value: PersonType.PF },
+    { label: 'Pessoa Jurídica', value: PersonType.PJ }
   ];
   public modalityOptions = [
     { label: 'Pré-Fixado', value: Modality.FIXED },
     { label: 'Pós-Fixado', value: Modality.FLOATING }
   ]
   public productOptions: Product[] = [];
+  public isLoadingProducts = false;
+  public isLoadingSimulation = false;
 
   constructor (
     private formBuilder: FormBuilder,
     private productService: ProductService,
-    private creditRateService: CreditRateService
+    private creditRateService: CreditRateService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -62,23 +68,51 @@ export class CreditSimulatorComponent implements OnInit {
   }
 
   private loadProductsOptions(personType: number): void {
-    this.productService.getProductsByPersonType(personType).subscribe(products => {
-      this.productOptions = products;
-    });
+    this.isLoadingProducts = true;
+    this.productService.getProductsByPersonType(personType)
+      .pipe(
+        finalize(() => this.isLoadingProducts = false),
+        catchError(error => {
+          this.toastr.error('Erro ao carregar produtos. Por favor, tente novamente.');
+          return of([]);
+        })
+      )
+      .subscribe(products => {
+        this.productOptions = products;
+        if (products.length === 0) {
+          this.toastr.warning('Nenhum produto encontrado para o tipo de pessoa selecionado.');
+        }
+      });
   }
 
   public onSubmit(): void{
-    console.log(this.form.value);
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.toastr.error('Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+
     this.creditResult = undefined;
 
     if (this.form.value.salary < 0) {
       this.form.get('salary')?.setErrors({ min: true });
+      this.toastr.error('A renda não pode ser negativa.');
       return;
     }
 
-    this.creditRateService.simulateCreditRate(this.form.value).subscribe(res => {
-      this.creditResult = res;
-    });
+    this.isLoadingSimulation = true;
+    this.creditRateService.simulateCreditRate(this.form.value)
+      .pipe(
+        finalize(() => this.isLoadingSimulation = false),
+        catchError(error => {
+          this.toastr.error('Erro ao simular crédito. Por favor, tente novamente.');
+          return of(null);
+        })
+      )
+      .subscribe(res => {
+        if (res) {
+          this.creditResult = res;
+          this.toastr.success('Simulação realizada com sucesso!');
+        }
+      });
   }
 }

@@ -19,7 +19,7 @@ export class CreditRateService {
     return this.http.post<any>(`${this.apiUrl}/SimularCredito`, params).pipe(
       map(data => ({
         segmentName: data.nomeSegmento,
-        creditRate: data.taxa * 100
+        creditRate: Number((data.taxa * 100).toFixed(2))
       })),
       catchError(error => {
         console.error('Erro ao simular crédito:', error);

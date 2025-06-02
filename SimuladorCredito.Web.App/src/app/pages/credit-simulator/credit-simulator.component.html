@@ -24,12 +24,15 @@
 
             <div class="form-group">
                 <label for="productId">Produto:</label>
-                <select id="productId" formControlName="productId" class="form-control">
-                    <option value="">Selecione</option>
-                    <option *ngFor="let produto of productOptions" [value]="produto.productId">
-                        {{ produto.name }}
-                    </option>
-                </select>
+                <div class="select-container">
+                    <select id="productId" formControlName="productId" class="form-control" [class.loading]="isLoadingProducts">
+                        <option value="">Selecione</option>
+                        <option *ngFor="let produto of productOptions" [value]="produto.productId">
+                            {{ produto.name }}
+                        </option>
+                    </select>
+                    <div *ngIf="isLoadingProducts" class="loading-spinner"></div>
+                </div>
             </div>
 
             <div class="form-group">
@@ -46,7 +49,10 @@
                 />
             </div>
 
-            <button type="submit" class="submit-button" (click)="onSubmit()">Simular</button>
+            <button type="submit" class="submit-button" (click)="onSubmit()" [disabled]="isLoadingSimulation">
+                <span *ngIf="!isLoadingSimulation">Simular</span>
+                <div *ngIf="isLoadingSimulation" class="loading-spinner"></div>
+            </button>
         </form>
     </div>
 

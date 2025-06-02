@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'ngx-toastr/toastr';
+
 * {
     margin: 0;
     padding: 0;
@@ -14,4 +16,44 @@ html, body {
 
 body {
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+// Estilos do Toastr
+.toast-container {
+    z-index: 999999 !important;
+}
+
+.toast-container .ngx-toastr {
+    box-shadow: 0 0 12px rgba(0,0,0,0.1) !important;
+    border-radius: 8px !important;
+    padding: 15px !important;
+
+    &:before {
+        display: none !important;
+    }
+}
+
+.toast-container .toast-message {
+    padding: 0 !important;
+}
+
+.toast-container .toast-error {
+    background-color: #dc3545 !important;
+    background-image: none !important;
+}
+
+.toast-container .toast-success {
+    background-color: #28a745 !important;
+    background-image: none !important;
+}
+
+.toast-container .toast-warning {
+    background-color: #ffc107 !important;
+    color: #333 !important;
+    background-image: none !important;
+}
+
+.toast-container .toast-info {
+    background-color: #17a2b8 !important;
+    background-image: none !important;
 }
