@@ -11,9 +11,11 @@ namespace SimuladorCredito.Api.Servicos
         private readonly IProdutoServico _produtoServico;
         private readonly ISegmentoServico _segmentoServico;
 
-        public TaxaCreditoServico(ITaxaCreditoRepositorio taxaCreditoRepositorio)
+        public TaxaCreditoServico(ITaxaCreditoRepositorio taxaCreditoRepositorio, IProdutoServico produtoServico, ISegmentoServico segmentoServico)
         {
             _taxaCreditoRepositorio = taxaCreditoRepositorio;
+            _produtoServico = produtoServico;
+            _segmentoServico = segmentoServico;
         }
 
         public async Task<TaxaCredito> ObterPorId(int id)
