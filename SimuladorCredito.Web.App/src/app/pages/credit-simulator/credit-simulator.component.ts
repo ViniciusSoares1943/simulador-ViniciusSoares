@@ -69,17 +69,19 @@ export class CreditSimulatorComponent implements OnInit {
 
   private loadProductsOptions(personType: number): void {
     this.isLoadingProducts = true;
+    let hadError = false;
     this.productService.getProductsByPersonType(personType)
       .pipe(
         finalize(() => this.isLoadingProducts = false),
         catchError(error => {
+          hadError = true;
           this.toastr.error('Erro ao carregar produtos. Por favor, tente novamente.');
           return of([]);
         })
       )
       .subscribe(products => {
         this.productOptions = products;
-        if (products.length === 0) {
+        if (!hadError && products.length === 0) {
           this.toastr.warning('Nenhum produto encontrado para o tipo de pessoa selecionado.');
         }
       });
